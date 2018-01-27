@@ -17,7 +17,7 @@ class GetCourseItemResource(object):
             res.status = falcon.HTTP_200
 
             res.body = json.dumps({
-                'firebase_url': firebase_url,
+                'firebase_url': '/' + firebase_url,
                 'metadata': metadata
             })
         else:

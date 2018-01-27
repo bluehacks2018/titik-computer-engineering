@@ -1,7 +1,7 @@
 """Application module file"""
 import falcon
 
-from resources import SampleResource,LoginResource, RegisterResource, UserResource, AddCourseItemResource, PlaylistResource, GetCourseItemResource
+from resources import RateResource, GetRateResource, SuggestResource, SampleResource,LoginResource, RegisterResource, UserResource, AddCourseItemResource, PlaylistResource, GetCourseItemResource
 from db import SQLAlchemySessionManager, Session
 
 # falcon.API instances are callable WSGI apps
@@ -19,6 +19,9 @@ USER = UserResource()
 COURSE_ITEM = AddCourseItemResource()
 GET_COURSE_ITEM = GetCourseItemResource()
 PLAYLIST = PlaylistResource()
+SUGGEST = SuggestResource()
+RATE = RateResource()
+GET_RATE = GetRateResource()
 
 # Routes
 APP.add_route('/login', LOGIN)
@@ -28,3 +31,6 @@ APP.add_route('/user', USER)
 APP.add_route('/course_item/get', GET_COURSE_ITEM)
 APP.add_route('/course_item', COURSE_ITEM)
 APP.add_route('/playlist', PLAYLIST)
+APP.add_route('/suggest', SUGGEST)
+APP.add_route('/rate/get', GET_RATE)
+APP.add_route('/rate', RATE)

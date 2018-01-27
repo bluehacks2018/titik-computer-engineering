@@ -15,7 +15,7 @@ class User(Base):
         return "<Sample(id='{}', name='{}', email='{}', password='{}')>".format(
             self.id,
             self.name,
-            self.fullname,
+            self.email,
             self.password
         )
         

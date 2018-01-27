@@ -7,7 +7,8 @@ class Rating(Base):
     id = Column(Integer, primary_key=True)
     user_email = Column(String)
     firebase_url = Column(String)
-    
+    rating = Column(String)
+
     # Languages:
     #   English
     #   Tagalog

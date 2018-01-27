@@ -28,7 +28,7 @@ class AddCourseItemResource(object):
             if course_item:
                 res.status = falcon.HTTP_200
                 res.body = json.dumps({
-                    'firebase_url': course_item.firebase_url,
+                    'firebase_url': '/' + course_item.firebase_url,
                     'title': course_item.title,
                     'language': course_item.language,
                     'owner': course_item.owner,

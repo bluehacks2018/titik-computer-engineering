@@ -1,0 +1,298 @@
+// ADD COURSE ITEM
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/course_item";
+String firebase_url ="";
+String language = "ENGLISH";
+String owner = "email_here";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    jsonRequest.put("firebase_url", firebase_url);
+    jsonRequest.put("language", language);
+    jsonRequest.put("owner", owner);
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// GET PLAYLIST with name and user
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/playlist";
+String name_query = "?name=";
+String name = "playlist_name_here";
+String user_query = "&user_email="
+String email = "email_here";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.GET, url+name_query+name+user_query+email, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// ADD PLAYLIST ITEM
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/playlist";
+String name = "playlist_name_here";
+String firebase_url = "firebase_url_here";
+String user_email = "owner_email_here";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    jsonRequest.put("firebase_url", firebase_url);
+    jsonRequest.put("name", name);
+    jsonRequest.put("user_email", user_email);
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// GET SINGLE COURSE ITEM
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/course_item/get";
+String firebase_url = "";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    jsonRequest.put("firebase_url", firebase_url);
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// GET AI Suggestions
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/suggest";
+String user_email_query = "?user_email=";
+String user_email = "user_email_here";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.GET, url+user_email_query+user_email, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// LOGIN
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/login";
+String email = "";
+String password = "";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    jsonRequest.put("email", email);
+    jsonRequest.put("password", password);
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// REGISTER
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/register";
+String name = "";
+String email = "";
+String password = "";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    jsonRequest.put("name", name);
+    jsonRequest.put("email", email);
+    jsonRequest.put("password", password);
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// GET USER DETAILS
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/login";
+String email_params = "/email_here";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.GET, url+email_params, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// GET COURSE RATING
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/rate/get";
+String firebase_url = "";
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    jsonRequest.put("firebase_url", firebase_url);
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.POST, url+email_params, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// RATE Note: disable rating after rated
+RequestQueue queue = Volley.newRequestQueue(this);
+String url = "/rate";
+String firebase_url = "";
+String user_email = "";
+String add_rating = ""; // 0 - 5
+
+try {
+    JSONObject jsonRequest = new JSONObject();
+    jsonRequest.put("firebase_url", firebase_url);
+    jsonRequest.put("user_email", user_email);
+    jsonRequest.put("add_rating", add_rating);
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.POST, url+email_params, jsonRequest, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Response Here
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO Auto-generated method stub
+                }
+            });
+    // Add the request to the RequestQueue.
+    queue.add(jsObjRequest);
+    queue.start();
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}

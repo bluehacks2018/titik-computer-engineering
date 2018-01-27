@@ -13,6 +13,7 @@ sqlalchemy = "*"
 "psycopg2" = "*"
 python-firebase = "*"
 google-cloud-storage = "*"
+pandas = "*"
 
 
 [dev-packages]

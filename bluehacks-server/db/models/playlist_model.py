@@ -5,6 +5,7 @@ from .declarative_base import Base
 class Playlist(Base):
     __tablename__ = 'playlist'
     id = Column(Integer, primary_key=True)
+    name = Column(String)
     user_email = Column(String)
     firebase_url = Column(String)
 
