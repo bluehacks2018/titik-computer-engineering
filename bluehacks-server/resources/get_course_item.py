@@ -12,6 +12,7 @@ class GetCourseItemResource(object):
                 
         if requestBody:
             firebase_url = requestBody.get('firebase_url')
+            firebase_url = requestBody.get('language')
             metadata = bucket.get_blob(firebase_url).metadata
 
             res.status = falcon.HTTP_200

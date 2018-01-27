@@ -15,4 +15,15 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to Spinner -->
+    <string name="field_prompt">Choose a field</string>
+
+    <string-array name="field_arrays">
+        <item>Livelihood</item>
+        <item>Group Dynamics</item>
+        <item>Technical Skills</item>
+        <item>Self Improvement</item>
+    </string-array>
+
 </resources>
