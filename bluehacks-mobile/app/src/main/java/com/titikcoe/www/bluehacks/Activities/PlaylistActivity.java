@@ -6,7 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.titikcoe.www.bluehacks.Adapters.AudioContentAdapter;
+import com.titikcoe.www.bluehacks.Models.Course;
 import com.titikcoe.www.bluehacks.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaylistActivity extends AppCompatActivity {
 
@@ -21,6 +25,8 @@ public class PlaylistActivity extends AppCompatActivity {
             "abc", "def", "ghi", "jkl",
     };
 
+    private List<Course> mCourses;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +37,9 @@ public class PlaylistActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new AudioContentAdapter(sampleDataSet);
+
+        mCourses = new ArrayList<Course>();
+        mAdapter = new AudioContentAdapter(mCourses);
         mRecyclerView.setAdapter(mAdapter);
     }
 }
