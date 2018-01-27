@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <com.titikcoe.www.bluehacks.Views.SquareImageView
+            android:id="@+id/playlist_image_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:src="@mipmap/ic_launcher"
@@ -22,8 +23,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title_text_view"
@@ -31,16 +32,19 @@
                 android:layout_height="match_parent"
                 android:text="Hello"
                 android:gravity="center_vertical"
-                android:padding="8dp" />
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/uploader_text_view"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Ako si aqoe"
-                android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:padding="8dp" />
+                android:paddingLeft="8dp"
+                android:paddingBottom="8dp"/>
 
 
         </LinearLayout>
