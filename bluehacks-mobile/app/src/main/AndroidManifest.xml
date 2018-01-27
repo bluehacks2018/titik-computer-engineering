@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -31,7 +31,8 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".Activities.UploadAudio" />
-        <activity android:name=".Activities.RecordActivity"></activity>
+        <activity android:name=".Activities.RecordActivity" />
+        <activity android:name=".Activities.StreamerActivity"></activity>
     </application>
 
 </manifest>

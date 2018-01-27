@@ -6,4 +6,47 @@
     android:layout_height="match_parent"
     tools:context="com.titikcoe.www.bluehacks.Activities.RecordActivity">
 
+    <Button
+        android:id="@+id/btn_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="record"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="342dp" />
+
+    <Button
+        android:id="@+id/btn_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        tools:layout_editor_absoluteX="230dp"
+        tools:layout_editor_absoluteY="342dp" />
+
+    <TextView
+        android:id="@+id/txv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="56sp"
+        tools:layout_editor_absoluteX="77dp"
+        tools:layout_editor_absoluteY="134dp" />
+
+    <TextView
+        android:id="@+id/txv_recording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Currently recording"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="426dp" />
+
+    <TextView
+        android:id="@+id/txv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title Here"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="469dp" />
+
 </android.support.constraint.ConstraintLayout>
