@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/poster_image_view"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/poster_image_view"
+        android:text="Title"
+        android:layout_marginLeft="8dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/uploader_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/poster_image_view"
+        android:layout_below="@id/title_text_view"
+        android:text="Mike Wazowski"
+        android:layout_marginLeft="8dp"
+        android:textColor="@android:color/black"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/poster_image_view"
+        android:layout_below="@id/uploader_text_view"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp">
+
+        <ImageView
+            android:id="@+id/audio_image_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/duration_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="05:35"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="4dp"/>
+
+        <ImageView
+            android:id="@+id/file_size_image_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="8dp"/>
+
+        <TextView
+            android:id="@+id/file_size_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.0Mb"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="4dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/description_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="5"
+        android:layout_below="@id/poster_image_view"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:text="I am a description I am used to describe whatever I am tasked to describe because that's what I do: I am a description. Tell me, did this description of a description help you understand what a description is?"
+        android:textColor="@android:color/black"/>
+
+    <LinearLayout
+        android:id="@+id/actions_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/description_text_view"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:id="@+id/action_like"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerInside"/>
+
+        <ImageView
+            android:id="@+id/action_add_to_playlist"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerInside"/>
+
+        <ImageView
+            android:id="@+id/action_download"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerInside"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a1a1a1"
+        android:layout_below="@id/actions_linear_layout"
+        android:layout_marginTop="16dp"/>
+
+
+
+</RelativeLayout>
