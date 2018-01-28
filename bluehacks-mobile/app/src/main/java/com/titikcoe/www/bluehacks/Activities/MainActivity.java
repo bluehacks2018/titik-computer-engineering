@@ -31,6 +31,8 @@ import com.titikcoe.www.bluehacks.Decorations.GridSpacingItemDecoration;
 import com.titikcoe.www.bluehacks.Models.Course;
 import com.titikcoe.www.bluehacks.Models.Playlist;
 import com.titikcoe.www.bluehacks.R;
+import com.titikcoe.www.bluehacks.TutoApplication;
+import com.titikcoe.www.bluehacks.Utils.RandomPhotoFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             "abc", "def", "ghi", "jkl",
     };
 
-    private List<Playlist> mPlaylists;
+//    private List<Playlist> mPlaylists;
 
     private static final String[] CATEGORIES = {"All", "Livelihood",
                                               "Technical Skills",
@@ -68,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getPlaylists();
+
+        TutoApplication app = (TutoApplication) getApplication();
+        ArrayList<Playlist> playlists = app.getPlaylists();
+
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_layout);
         collapsingToolbarLayout.setTitleEnabled(false);
@@ -85,10 +90,12 @@ public class MainActivity extends AppCompatActivity {
         int spacingInPixels = 12;
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true, 0));
 
-        mPlaylists = new ArrayList<Playlist>();
+//        mPlaylists = new ArrayList<Playlist>();
 
-        mAdapter = new PlaylistAdapter(this, mPlaylists);
+        mAdapter = new PlaylistAdapter(this, playlists);
         mRecyclerView.setAdapter(mAdapter);
+
+        getPlaylists();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.nav_list_view);
@@ -163,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-
+                                TutoApplication app = (TutoApplication) getApplication();
+                                app.getPlaylists().clear();
                                 JSONArray data = response.getJSONArray("data");
                                 Log.d("JSON", data.toString(4));
                                 for (int i = 0; i < data.length(); i++) {
@@ -183,8 +191,10 @@ public class MainActivity extends AppCompatActivity {
                                         courses.add(new Course(null, playlistOwner,
                                                 null, size, null, url));
                                     }
-                                    playlist = new Playlist(playlistOwner, playlistName, courses);
-                                    mPlaylists.add(playlist);
+                                    playlist = new Playlist(RandomPhotoFactory.getRandomPhoto(), playlistOwner, playlistName, courses);
+
+                                    app.addPlaylist(playlist);
+//                                            mPlaylists.add(playlist);
 
                                 }
                                 mAdapter.notifyDataSetChanged();

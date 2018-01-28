@@ -60,15 +60,13 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent startPlaylistIntent = new Intent(mCtx, PlaylistActivity.class);
-                String title = mDataSet.get(position).getPlaylistName();
-                String owner = mDataSet.get(position).getOwnerName();
-                startPlaylistIntent.putExtra("title", title);
-                startPlaylistIntent.putExtra("owner", owner);
+
+                startPlaylistIntent.putExtra("position", position);
                 mCtx.startActivity(startPlaylistIntent);
             }
         });
 
-        holder.mPosterImageView.setImageResource(RandomPhotoFactory.getRandomPhoto());
+        holder.mPosterImageView.setImageResource(mDataSet.get(position).getResourceId());
         holder.mTitleTextView.setText(mDataSet.get(position).getPlaylistName());
         holder.mUploaderTextView.setText(mDataSet.get(position).getOwnerName());
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Playlist {
 
+    private int mResourceId;
     private String mOwnerName;
     private String mPlaylistName;
     private List<Course> mCourses;
@@ -19,10 +20,27 @@ public class Playlist {
         mCourses = new ArrayList<Course>();
     }
 
-    public Playlist(String ownerName, String playlistName, List<Course> courses) {
+    public Playlist(int resourceId, String ownerName, String playlistName, List<Course> courses) {
+        mResourceId = resourceId;
         mOwnerName = ownerName;
         mPlaylistName = playlistName;
         mCourses = courses;
+    }
+
+    public List<Course> getCourses() {
+        return mCourses;
+    }
+
+    public void setCourses(List<Course> mCourses) {
+        this.mCourses = mCourses;
+    }
+
+    public int getResourceId() {
+        return mResourceId;
+    }
+
+    public void setResourceId(int mResourceId) {
+        this.mResourceId = mResourceId;
     }
 
     public void addCourse(Course course) {
