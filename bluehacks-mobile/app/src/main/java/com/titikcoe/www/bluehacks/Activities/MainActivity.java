@@ -1,7 +1,11 @@
 package com.titikcoe.www.bluehacks.Activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,15 +13,33 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.titikcoe.www.bluehacks.Adapters.PlaylistAdapter;
 import com.titikcoe.www.bluehacks.Decorations.GridSpacingItemDecoration;
+import com.titikcoe.www.bluehacks.Models.Course;
+import com.titikcoe.www.bluehacks.Models.Playlist;
 import com.titikcoe.www.bluehacks.R;
+import com.titikcoe.www.bluehacks.TutoApplication;
+import com.titikcoe.www.bluehacks.Utils.RandomPhotoFactory;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
             "abc", "def", "ghi", "jkl",
     };
 
-    private static final String[] CATEGORIES = {"Livelihood",
+//    private List<Playlist> mPlaylists;
+
+    private static final String[] CATEGORIES = {"All", "Livelihood",
                                               "Technical Skills",
                                               "Self Improvement",
                                               "Group Dynamics"};
@@ -45,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        TutoApplication app = (TutoApplication) getApplication();
+        ArrayList<Playlist> playlists = app.getPlaylists();
+
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_layout);
         collapsingToolbarLayout.setTitleEnabled(false);
@@ -61,8 +90,12 @@ public class MainActivity extends AppCompatActivity {
         int spacingInPixels = 12;
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true, 0));
 
-        mAdapter = new PlaylistAdapter(sampleDataSet);
+//        mPlaylists = new ArrayList<Playlist>();
+
+        mAdapter = new PlaylistAdapter(this, playlists);
         mRecyclerView.setAdapter(mAdapter);
+
+        getPlaylists();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.nav_list_view);
@@ -126,6 +159,65 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void getPlaylists() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://b225c536.ngrok.io/playlist";
+
+
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                TutoApplication app = (TutoApplication) getApplication();
+                                app.getPlaylists().clear();
+                                JSONArray data = response.getJSONArray("data");
+                                Log.d("JSON", data.toString(4));
+                                for (int i = 0; i < data.length(); i++) {
+                                    Playlist playlist;
+                                    JSONObject datum = data.getJSONObject(i);
+                                    String playlistName = datum.getString("name");
+                                    String playlistOwner = datum.getString("owner");
+                                    ArrayList<Course> courses = new ArrayList<>();
+                                    JSONArray firebase_data = datum.getJSONArray("firebase_data");
+                                    for (int j = 0; j < firebase_data.length(); j++) {
+                                        JSONObject firebase_datum = firebase_data.getJSONObject(j);
+
+                                        String size = firebase_datum.getString("size");
+                                        String url = firebase_datum.getString("url");
+//                                        JSONObject metadata = firebase_datum.getJSONObject("metadata");
+                                        // TODO: get metadata shit
+                                        courses.add(new Course(null, playlistOwner,
+                                                null, size, null, url));
+                                    }
+                                    playlist = new Playlist(RandomPhotoFactory.getRandomPhoto(), playlistOwner, playlistName, courses);
+
+                                    app.addPlaylist(playlist);
+//                                            mPlaylists.add(playlist);
+
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO Auto-generated method stub
+                        }
+                    });
+            // Add the request to the RequestQueue.
+            queue.add(jsObjRequest);
+            queue.start();
+
+
+
+    }
+
+
 
 }
 

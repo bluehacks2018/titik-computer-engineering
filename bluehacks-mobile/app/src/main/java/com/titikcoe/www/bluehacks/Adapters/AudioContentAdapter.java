@@ -7,14 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.titikcoe.www.bluehacks.Models.Course;
 import com.titikcoe.www.bluehacks.R;
+
+import java.util.List;
 
 /**
  * Created by Adrian Mark Perea on 27/01/2018.
  */
 
 public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapter.ViewHolder> {
-    private String[] mDataSet;
+    private List<Course> mDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mPosterImageView;
@@ -47,7 +50,7 @@ public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapte
         }
     }
 
-    public AudioContentAdapter(String[] dataSet) {
+    public AudioContentAdapter(List<Course> dataSet) {
         mDataSet = dataSet;
     }
 
@@ -62,11 +65,21 @@ public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        holder.mTextView.setText(mDataSet[position]);
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Add music playing shit here
+            }
+        });
+        holder.mTitleTextView.setText(mDataSet.get(position).getTitle());
+        holder.mUploaderTextView.setText(mDataSet.get(position).getUploader());
+        holder.mDurationTextView.setText(mDataSet.get(position).getDuration());
+        holder.mFileSizeTextView.setText(mDataSet.get(position).getFileSize() + "Mb");
+        holder.mDescriptionTextView.setText(mDataSet.get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return mDataSet.size();
     }
 }
