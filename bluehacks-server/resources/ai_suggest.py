@@ -2,7 +2,7 @@ import json
 import falcon
 import requests
 
-from db import Rating, User
+from db import Rating, User, Playlist
 from db import bucket
 
 import pandas as pd
@@ -41,5 +41,54 @@ class SuggestResource(object):
         filteredSims = simCandidates.drop(myRatings.index)
 
         print(filteredSims.head().index.values)
+        suggestions = filteredSims.head().index.values.tolist()
+        suggestionsOthers = simCandidates
+        # res.status = falcon.HTTP_200
+        # res.body = json.dumps({ 'suggestions': filteredSims.head().index.values.tolist() })
+
+        user_course_items = self.session.query(Playlist).filter(Playlist.firebase_url.in_(list(suggestions))).all()
+        user_course_items_others = self.session.query(Playlist).filter(Playlist.firebase_url.notin_(list(suggestions))).all()
+
+        user_course_items.extend(user_course_items_others)
+
+        data = []
+        for playlist in user_course_items:
+            if len(data) > 0:
+                for i in range(0,len(data)):
+                    entry = data[i]
+                    print(entry)
+                    if entry.get('name') == playlist.name and entry.get('owner') == playlist.user_email:
+                        entry.get('firebase_data').append({
+                            'url': playlist.firebase_url,
+                            'metadata': bucket.get_blob(playlist.firebase_url).metadata,
+                            'size': int(bucket.get_blob(playlist.firebase_url).size/1024/1024)
+                        })
+                        break
+                    elif data.index(entry) == len(data)-1 and entry.get('name') != playlist.name:
+                        data.append({
+                            'name': playlist.name,
+                            'owner': playlist.user_email,
+                            'firebase_data': [
+                                {
+                                    'url': playlist.firebase_url,
+                                    'metadata': bucket.get_blob(playlist.firebase_url).metadata,
+                                    'size': int(bucket.get_blob(playlist.firebase_url).size/1024/1024)
+                                }
+                            ]
+                        })
+            else:
+                data.append({
+                    'name': playlist.name,
+                    'owner': playlist.user_email,
+                    'firebase_data': [{
+                            'url': playlist.firebase_url,
+                            'metadata': bucket.get_blob(playlist.firebase_url).metadata,
+                            'size': int(bucket.get_blob(playlist.firebase_url).size/1024/1024)
+                        }
+                    ]
+                })
+
         res.status = falcon.HTTP_200
-        res.body = json.dumps({ 'suggestions': filteredSims.head().index.values.tolist() })
+        res.body = json.dumps({
+            'data': data
+        })

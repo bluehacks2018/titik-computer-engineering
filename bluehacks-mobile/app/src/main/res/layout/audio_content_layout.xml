@@ -44,7 +44,7 @@
             android:id="@+id/audio_image_view"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/headphone"/>
 
         <TextView
             android:id="@+id/duration_text_view"
@@ -58,7 +58,7 @@
             android:id="@+id/file_size_image_view"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/folder_2"
             android:layout_marginLeft="8dp"/>
 
         <TextView

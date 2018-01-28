@@ -32,6 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".Activities.RegisterActivity"></activity>
+
         <activity android:name=".Activities.UploadAudio" />
         <activity android:name=".Activities.RecordActivity" />
         <activity android:name=".Activities.StreamerActivity" />
@@ -44,6 +47,7 @@
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
+
 
         <!--
              MediaSession, prior to API 21, uses a broadcast receiver to communicate with a
@@ -58,6 +62,7 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
