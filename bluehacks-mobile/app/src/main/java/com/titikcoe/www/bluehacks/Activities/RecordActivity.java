@@ -20,6 +20,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,6 +35,9 @@ import com.titikcoe.www.bluehacks.R;
 import com.titikcoe.www.bluehacks.TutoApplication;
 import com.titikcoe.www.bluehacks.service.contentcatalogs.MusicLibrary;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -305,6 +314,7 @@ public class RecordActivity extends AppCompatActivity {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                Ufload(ref.toString());
                                 Log.d("Noted", "YES ");
 
                             }
@@ -366,4 +376,38 @@ public class RecordActivity extends AppCompatActivity {
         }
 
     };
+
+    private void Ufload(String fb_url) {
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "/playlist";
+        String name = "playlist_name_here";
+        String firebase_url = "firebase_url_here";
+        String user_email = "owner_email_here";
+
+        try {
+            JSONObject jsonRequest = new JSONObject();
+            jsonRequest.put("firebase_url", fb_url);
+            jsonRequest.put("name", name);
+            jsonRequest.put("user_email", user_email);
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // Response Here
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO Auto-generated method stub
+                        }
+                    });
+            // Add the request to the RequestQueue.
+            queue.add(jsObjRequest);
+            queue.start();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
