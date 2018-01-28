@@ -275,7 +275,7 @@ public class RecordActivity extends AppCompatActivity {
                     String userName = app.getUserEmail();
                     Log.d("Username", userName);
 
-                    StorageReference ref = mStorageRef.child(userName+"/");
+                    final StorageReference ref = mStorageRef.child(userName+"/"+fileName);
 
                     try {
 
@@ -291,12 +291,13 @@ public class RecordActivity extends AppCompatActivity {
                         InputStream stream = new FileInputStream(new File(
                                 getExternalFilesDir("").getAbsolutePath().concat("/"+fileName)));
                         UploadTask uploadTask = ref.putStream(stream);
-                        Log.d("Noted", "wow gumana");
+                        Log.d("Noted Firebase", ref.toString());
+                        Log.d("Noted Local", ref.toString());
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle unsuccessful uploads
-                                Log.d("Noted", "TANGINAW ");
+                                Log.d("Noted", "NAW ");
 
                             }
                         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -304,7 +305,7 @@ public class RecordActivity extends AppCompatActivity {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                                Log.d("Noted", "TANGIN YES ");
+                                Log.d("Noted", "YES ");
 
                             }
                         });
