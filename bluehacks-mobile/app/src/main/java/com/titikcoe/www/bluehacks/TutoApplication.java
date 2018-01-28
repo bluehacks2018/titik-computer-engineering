@@ -12,7 +12,8 @@ import java.util.List;
  */
 
 public class TutoApplication extends Application {
-    ArrayList<Playlist> mPlaylists;
+    private ArrayList<Playlist> mPlaylists;
+    private String mUserEmail;
 
     @Override
     public void onCreate() {
@@ -26,5 +27,13 @@ public class TutoApplication extends Application {
 
     public void addPlaylist(Playlist playlist) {
         mPlaylists.add(playlist);
+    }
+
+    public String getUserEmail() {
+        return mUserEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        mUserEmail = userEmail;
     }
 }

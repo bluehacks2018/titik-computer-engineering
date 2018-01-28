@@ -46,6 +46,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.titikcoe.www.bluehacks.R;
 import com.titikcoe.www.bluehacks.Singletons.RequestQueueSingleton;
+import com.titikcoe.www.bluehacks.TutoApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,8 +109,8 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -152,6 +153,8 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Intent startMainActivity = new Intent(LoginActivity.this, MainActivity.class);
+                                TutoApplication app = (TutoApplication) getApplication();
+                                app.setUserEmail(email);
                                 startActivity(startMainActivity);
                                 finish();
                             }
