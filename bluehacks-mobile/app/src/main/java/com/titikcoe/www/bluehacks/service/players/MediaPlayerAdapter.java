@@ -21,6 +21,7 @@ import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 import com.titikcoe.www.bluehacks.service.PlaybackInfoListener;
 import com.titikcoe.www.bluehacks.service.PlayerAdapter;
@@ -119,8 +120,19 @@ public final class MediaPlayerAdapter extends PlayerAdapter {
 //                    assetFileDescriptor.getFileDescriptor(),
 //                    assetFileDescriptor.getStartOffset(),
 //                    assetFileDescriptor.getLength());
-//            mMediaPlayer.setDataSource(mContext.getExternalFilesDir("").getAbsolutePath().concat("/"+mFilename));
-            mMediaPlayer.setDataSource(mFilename);
+
+            if(mFilename.contains("https://")||mFilename.contains("http://"))
+            {
+                mMediaPlayer.setDataSource(mFilename);
+                Log.d("testing", "this is url");
+            }
+            else
+            {
+                mMediaPlayer.setDataSource(mContext.getExternalFilesDir("").getAbsolutePath().concat("/"+mFilename));
+                Log.d("testing", "this is not url");
+            }
+
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to open file: " + mFilename, e);
         }

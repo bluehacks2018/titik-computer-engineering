@@ -120,7 +120,7 @@ public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapte
                     @Override
                     public void onSuccess(Uri uri) {
                         Intent uploadIntent = new Intent(mCtx, StreamerActivity.class);
-                        String title= "placeholder";
+                        String title= "Your Current Lesson";
                         Log.d("Hey",title);
                         uploadIntent.putExtra("title",title);
                         uploadIntent.putExtra("url",uri);

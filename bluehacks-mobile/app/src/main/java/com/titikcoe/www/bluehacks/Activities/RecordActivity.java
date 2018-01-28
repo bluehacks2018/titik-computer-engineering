@@ -275,7 +275,7 @@ public class RecordActivity extends AppCompatActivity {
                     String userName = app.getUserEmail();
                     Log.d("Username", userName);
 
-                    StorageReference ref = mStorageRef.child(userName);
+                    StorageReference ref = mStorageRef.child(userName+"/");
 
                     try {
 
@@ -296,6 +296,7 @@ public class RecordActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle unsuccessful uploads
+                                Log.d("Noted", "TANGINAW ");
 
                             }
                         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -303,6 +304,7 @@ public class RecordActivity extends AppCompatActivity {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                Log.d("Noted", "TANGIN YES ");
 
                             }
                         });
