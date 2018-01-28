@@ -22,8 +22,11 @@ android {
 
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 97b664d33d7d135930d465c1a74a07268cf1c789
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'

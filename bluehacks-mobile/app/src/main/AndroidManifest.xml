@@ -38,11 +38,19 @@
 
 
         </activity>
+<<<<<<< HEAD
+        <activity android:name=".Activities.PlaylistActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".Activities.RegisterActivity"></activity>
+=======
 
         <activity android:name=".Activities.UploadAudio" />
         <activity android:name=".Activities.RecordActivity" />
         <activity android:name=".Activities.StreamerActivity"></activity>
 
+>>>>>>> 97b664d33d7d135930d465c1a74a07268cf1c789
     </application>
 
 </manifest>
