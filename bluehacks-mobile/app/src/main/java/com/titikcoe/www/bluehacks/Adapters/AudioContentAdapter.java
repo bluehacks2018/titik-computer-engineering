@@ -74,7 +74,7 @@ public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapte
         holder.mTitleTextView.setText(mDataSet.get(position).getTitle());
         holder.mUploaderTextView.setText(mDataSet.get(position).getUploader());
         holder.mDurationTextView.setText(mDataSet.get(position).getDuration());
-        holder.mFileSizeTextView.setText(mDataSet.get(position).getFileSize());
+        holder.mFileSizeTextView.setText(mDataSet.get(position).getFileSize() + "Mb");
         holder.mDescriptionTextView.setText(mDataSet.get(position).getDescription());
     }
 
