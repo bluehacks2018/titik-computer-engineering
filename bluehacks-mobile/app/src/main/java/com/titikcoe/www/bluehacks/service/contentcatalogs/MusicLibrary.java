@@ -24,6 +24,7 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 
 import com.titikcoe.www.bluehacks.BuildConfig;
+import com.titikcoe.www.bluehacks.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,17 +51,17 @@ public class MusicLibrary {
 //                "jazz_in_paris.mp3",
 //                R.drawable.album_jazz_blues,
 //                "album_jazz_blues");
-//        createMediaMetadataCompat(
-//                "The_Coldest_Shoulder",
-//                "The Coldest Shoulder",
-//                "The 126ers",
-//                "Youtube Audio Library Rock 2",
-//                "Rock",
-//                160,
-//                TimeUnit.SECONDS,
-//                "the_coldest_shoulder.mp3",
-//                R.drawable.album_youtube_audio_library_rock_2,
-//                "album_youtube_audio_library_rock_2");
+        createMediaMetadataCompat(
+                "The_Coldest_Shoulder",
+                "The Coldest Shoulder",
+                "The 126ers",
+                "Youtube Audio Library Rock 2",
+                "Rock",
+                160,
+                TimeUnit.SECONDS,
+                "the_coldest_shoulder.mp3",
+                R.drawable.album_youtube_audio_library_rock_2,
+                "album_youtube_audio_library_rock_2");
     }
 
     public static String getRoot() {

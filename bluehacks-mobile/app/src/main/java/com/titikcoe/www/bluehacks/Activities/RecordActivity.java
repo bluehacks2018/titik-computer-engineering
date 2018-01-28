@@ -14,15 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.titikcoe.www.bluehacks.R;
 import com.titikcoe.www.bluehacks.service.contentcatalogs.MusicLibrary;
-import com.titikcoe.www.bluehacks.ui.MediaSeekBar;
 
 
 import java.io.IOException;
@@ -52,11 +49,15 @@ public class RecordActivity extends AppCompatActivity {
     boolean mRecording = false;
     boolean mStopped = false;
     boolean mPaused = false;
+    String title = null;
+    String desc = null;
+    String genre = null;
+    String tags = null;
 
 
-    private EditText mEditTitle = null;
-    private EditText mEditDesc = null;
-    private EditText mEditGenre = null;
+//    private EditText mEditTitle = null;
+//    private EditText mEditDesc = null;
+//    private EditText mEditGenre = null;
 
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
@@ -112,7 +113,7 @@ public class RecordActivity extends AppCompatActivity {
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 
         mFileName = getExternalFilesDir("").getAbsolutePath();
-        mFileName +="/"+ mEditTitle.getText().toString().replace(" ", "_").concat(".3gp");
+        mFileName +="/"+ title.replace(" ", "_").concat(".3gp");
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
@@ -136,49 +137,49 @@ public class RecordActivity extends AppCompatActivity {
         mRecorder = null;
     }
 
-    class RecordButton extends android.support.v7.widget.AppCompatButton {
-        boolean mStartRecording = true;
+//    class RecordButton extends android.support.v7.widget.AppCompatButton {
+//        boolean mStartRecording = true;
+//
+//        OnClickListener clicker = new OnClickListener() {
+//            public void onClick(View v) {
+//                onRecord(mStartRecording);
+//                if (mStartRecording) {
+//                    setText("Stop recording");
+//                } else {
+//                    setText("Start recording");
+//                }
+//                mStartRecording = !mStartRecording;
+//            }
+//        };
+//
+//        public RecordButton(Context ctx) {
+//            super(ctx);
+//            setText("Start recording");
+//            setOnClickListener(clicker);
+//        }
+//    }
 
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onRecord(mStartRecording);
-                if (mStartRecording) {
-                    setText("Stop recording");
-                } else {
-                    setText("Start recording");
-                }
-                mStartRecording = !mStartRecording;
-            }
-        };
-
-        public RecordButton(Context ctx) {
-            super(ctx);
-            setText("Start recording");
-            setOnClickListener(clicker);
-        }
-    }
-
-    class PlayButton extends android.support.v7.widget.AppCompatButton {
-        boolean mStartPlaying = true;
-
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onPlay(mStartPlaying);
-                if (mStartPlaying) {
-                    setText("Stop playing");
-                } else {
-                    setText("Start playing");
-                }
-                mStartPlaying = !mStartPlaying;
-            }
-        };
-
-        public PlayButton(Context ctx) {
-            super(ctx);
-            setText("Start playing");
-            setOnClickListener(clicker);
-        }
-    }
+//    class PlayButton extends android.support.v7.widget.AppCompatButton {
+//        boolean mStartPlaying = true;
+//
+//        OnClickListener clicker = new OnClickListener() {
+//            public void onClick(View v) {
+//                onPlay(mStartPlaying);
+//                if (mStartPlaying) {
+//                    setText("Stop playing");
+//                } else {
+//                    setText("Start playing");
+//                }
+//                mStartPlaying = !mStartPlaying;
+//            }
+//        };
+//
+//        public PlayButton(Context ctx) {
+//            super(ctx);
+//            setText("Start playing");
+//            setOnClickListener(clicker);
+//        }
+//    }
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -192,14 +193,21 @@ public class RecordActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_record);
-        mPauseButton = (Button) findViewById(R.id.btn_pause);
+//        mPauseButton = (Button) findViewById(R.id.btn_pause);
 //        mPlayButton = (Button) findViewById(R.id.btn_play);
 //        mStopButton = (Button) findViewById(R.id.btn_stop);
 //        mSaveButton = (Button) findViewById(R.id.btn_save);
         mRecordButton = (Button) findViewById(R.id.btn_record);
-
+        TextView txvTitle = (TextView) findViewById(R.id.txv_title);
         timerTextView = (TextView) findViewById(R.id.txv_time);
+        final Intent receivedQueries = getIntent();
 
+        title = receivedQueries.getStringExtra("title");
+        desc = receivedQueries.getStringExtra("desc");
+        genre = receivedQueries.getStringExtra("genre");
+        tags = receivedQueries.getStringExtra("tags");
+
+        txvTitle.setText(title);
 
 
 
@@ -227,52 +235,11 @@ public class RecordActivity extends AppCompatActivity {
         mRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mRecording)
+                if(mStopped)
                 {
-                    mRecording=true;
-                    mRecordButton.setText("Pause");
-                    onRecord(true);
-                }
-                else
-                {
-                    onRecord(false);
-                    mPauseButton.setText("Save");
-                    mStopped=true;
-                }
-
-                return;
-            }
-        });
-        mPauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!mStopped)
-                {
-                    if(!mPaused)
-                    {
-                        mRecorder.pause();
-                        mPauseButton.setText("Continue");
-                        mPaused=true;
-                        timeSwapBuff += timeInMilliseconds;
-                        customHandler.removeCallbacks(updateTimerThread);
-                    }
-                    else
-                    {
-                        mRecorder.resume();
-                        mPauseButton.setText("Pause");
-                        mPaused=false;
-                        startHTime = SystemClock.uptimeMillis();
-                        customHandler.postDelayed(updateTimerThread, 0);
-
-                    }
-                }
-                else{
                     Intent doneIntent = new Intent(RecordActivity.this, MainActivity.class);
-                    String mediaId = mEditTitle.getText().toString().replace(" ", "_");
-                    String title = mEditTitle.getText().toString();
-                    String desc = mEditDesc.getText().toString();
-                    String genre = mEditGenre.getText().toString();
-                    String fileName = mEditTitle.getText().toString().replace(" ", "_").concat(".3gp");
+                    String mediaId = title.replace(" ", "_");
+                    String fileName = mediaId.concat(".3gp");
                     mLib.createMediaMetadataCompat(
                             mediaId,
                             title,
@@ -287,12 +254,54 @@ public class RecordActivity extends AppCompatActivity {
                     startActivity(doneIntent);
                     finish();
                     return;
-
-
                 }
+                if(!mRecording)
+                {
+                    mRecording=true;
+                    mRecordButton.setText("Stop");
+                    onRecord(true);
+                }
+                else
+                {
+                    onRecord(false);
+                    mStopped=true;
+                    mRecordButton.setText("Save");
+                }
+
                 return;
             }
         });
+//        mPauseButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                if(!mStopped)
+////                {
+////                    if(!mPaused)
+////                    {
+////                        mRecorder.pause();
+////                        mPauseButton.setText("Continue");
+////                        mPaused=true;
+////                        timeSwapBuff += timeInMilliseconds;
+////                        customHandler.removeCallbacks(updateTimerThread);
+////                    }
+////                    else
+////                    {
+////                        mRecorder.resume();
+////                        mPauseButton.setText("Pause");
+////                        mPaused=false;
+////                        startHTime = SystemClock.uptimeMillis();
+////                        customHandler.postDelayed(updateTimerThread, 0);
+////
+////                    }
+////                }
+////                else{
+//
+//
+//
+//
+//
+//            }
+//        });
 //        mSaveButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

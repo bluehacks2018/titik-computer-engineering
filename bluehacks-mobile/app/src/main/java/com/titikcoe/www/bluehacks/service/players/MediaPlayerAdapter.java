@@ -25,7 +25,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import com.titikcoe.www.bluehacks.service.PlaybackInfoListener;
 import com.titikcoe.www.bluehacks.service.PlayerAdapter;
 import com.titikcoe.www.bluehacks.service.contentcatalogs.MusicLibrary;
-//import com.titikcoe.www.bluehacks.ui.MainActivity;
+import com.titikcoe.www.bluehacks.Activities.MySoundsActivity;
 
 /**
  * Exposes the functionality of the {@link MediaPlayer} and implements the {@link PlayerAdapter}
@@ -118,8 +118,8 @@ public final class MediaPlayerAdapter extends PlayerAdapter {
 //                    assetFileDescriptor.getFileDescriptor(),
 //                    assetFileDescriptor.getStartOffset(),
 //                    assetFileDescriptor.getLength());
-            //mMediaPlayer.setDataSource(mContext.getExternalFilesDir("").getAbsolutePath().concat("/"+mFilename));
-            mMediaPlayer.setDataSource(mFilename);
+            mMediaPlayer.setDataSource(mContext.getExternalFilesDir("").getAbsolutePath().concat("/"+mFilename));
+            //mMediaPlayer.setDataSource(mFilename);
         } catch (Exception e) {
             throw new RuntimeException("Failed to open file: " + mFilename, e);
         }

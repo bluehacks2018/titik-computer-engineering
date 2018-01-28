@@ -1,6 +1,7 @@
 package com.titikcoe.www.bluehacks.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -61,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] CATEGORIES = {"All", "Livelihood",
                                               "Technical Skills",
                                               "Self Improvement",
-                                              "Group Dynamics"};
+                                              "Group Dynamics",
+                                              "Record your Own!",
+                                              "My Recordings"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +123,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mDrawerList.setItemChecked(position, true);
+                if(CATEGORIES[position].matches("Record your Own!"))
+                {
+                    Intent uploadIntent = new Intent(MainActivity.this, UploadAudio.class);
+                    startActivity(uploadIntent);
+                    finish();
+                }
+                if(CATEGORIES[position].matches("My Recordings"))
+                {
+                    Intent soundsIntent = new Intent(MainActivity.this, MySoundsActivity.class);
+                    startActivity(soundsIntent);
+                    finish();
+                }
                 getSupportActionBar().setTitle(CATEGORIES[position]);
                 mDrawerLayout.closeDrawer(findViewById(R.id.nav_layout));
             }

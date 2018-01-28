@@ -59,6 +59,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "139622008387-6bijca1ikms3c20g26qcbeee85uqt6nh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.titikcoe.www.bluehacks",
+            "certificate_hash": "75440253e4dbc5c480b7d2f8a96ac3939235e534"
+          }
+        },
+        {
           "client_id": "139622008387-0aq2ii4r4hv6b3b9bn9p7j4m1qrq309p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

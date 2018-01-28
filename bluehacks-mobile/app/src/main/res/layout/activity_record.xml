@@ -1,52 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.titikcoe.www.bluehacks.Activities.RecordActivity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/btn_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="record"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="342dp" />
-
-    <Button
-        android:id="@+id/btn_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pause"
-        tools:layout_editor_absoluteX="230dp"
-        tools:layout_editor_absoluteY="342dp" />
+        android:layout_above="@+id/txv_recording"
+        android:layout_alignStart="@+id/txv_title"
+        android:layout_marginBottom="55dp"
+        android:text="record" />
 
     <TextView
         android:id="@+id/txv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="56sp"
-        tools:layout_editor_absoluteX="77dp"
-        tools:layout_editor_absoluteY="134dp" />
+        android:layout_above="@+id/btn_record"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="104dp"
+        android:textSize="56sp" />
 
     <TextView
         android:id="@+id/txv_recording"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/txv_title"
+        android:layout_alignEnd="@+id/txv_time"
+        android:layout_marginBottom="28dp"
         android:text="Currently recording"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="426dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="74dp"
         android:text="Title Here"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="469dp" />
+        android:textSize="20sp" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

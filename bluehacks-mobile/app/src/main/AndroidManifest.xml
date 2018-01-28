@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.titikcoe.www.bluehacks">
 
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -12,20 +11,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".TutoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".TutoApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MainActivity">
-
-        </activity>
+        <activity android:name=".Activities.MainActivity"></activity>
         <activity android:name=".Activities.PlaylistActivity" />
         <activity
             android:name=".Activities.LoginActivity"
@@ -35,14 +31,33 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
-
         <activity android:name=".Activities.UploadAudio" />
         <activity android:name=".Activities.RecordActivity" />
-        <activity android:name=".Activities.StreamerActivity"></activity>
+        <activity android:name=".Activities.StreamerActivity" />
+        <activity android:name=".Activities.MySoundsActivity"></activity>
+        <service
+            android:name=".service.MusicService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
 
+        <!--
+             MediaSession, prior to API 21, uses a broadcast receiver to communicate with a
+             media session. It does not have to be this broadcast receiver, but it must
+             handle the action "android.intent.action.MEDIA_BUTTON".
+
+             Additionally, this is used to resume the service from an inactive state upon
+             receiving a media button event (such as "play").
+        -->
+        <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
