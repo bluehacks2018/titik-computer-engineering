@@ -3,7 +3,7 @@ import json
 import falcon
 
 
-from db import Sample
+from db import User
 
 class LoginResource(object):
     def on_post(self, req, res):

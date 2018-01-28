@@ -11,6 +11,7 @@ class CourseItem(Base):
     language = Column(String)
     owner = Column(String)
     filesize = Column(String)
+    category = Column(String)
     rating = Column(Integer, default=0)
     rating_weight = Column(Integer, default=0)
 

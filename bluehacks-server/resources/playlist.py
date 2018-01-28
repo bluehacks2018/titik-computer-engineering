@@ -7,28 +7,51 @@ from db import bucket
 
 class PlaylistResource(object):
     def on_get(self, req, res):
-        if req.params['name'] and req.params['user_email']:
-            name = req.params['name']
-            user_email = req.params['user_email']
-            user_course_items = self.session.query(Playlist).filter_by(name=name, user_email=user_email).all()
-            print(user_course_items)
-
-            if user_course_items:
-                url_array = []
-                for course in user_course_items:
-                    url_array.append({
-                        'url': '/' + course.firebase_url,
-                        'metadata': bucket.get_blob(course.firebase_url).metadata
-                    })
-
-                res.status = falcon.HTTP_200
-                res.body = json.dumps({
-                    'playlist': url_array
-                })
+        user_course_items = self.session.query(Playlist).all()
+        data = []
+        for playlist in user_course_items:
+            if len(data) > 0:
+                for i in range(0,len(data)):
+                    entry = data[i]
+                    if entry.get('name') == playlist.name and entry.get('owner') == playlist.user_email:
+                        print('Entry Found, Adding {}'.format(playlist.firebase_url))
+                        entry.get('firebase_data').append({
+                            'url': playlist.firebase_url,
+                            'metadata': bucket.get_blob(playlist.firebase_url).metadata,
+                            'size': int(bucket.get_blob(playlist.firebase_url).size/1024/1024)
+                        })
+                    elif data.index(entry) == len(data)-1:
+                        print('Creating Entry, Adding {}'.format(playlist.firebase_url))
+                        data.append({
+                            'name': playlist.name,
+                            'owner': playlist.user_email,
+                            'firebase_data': [
+                                {
+                                    'url': playlist.firebase_url,
+                                    'metadata': bucket.get_blob(playlist.firebase_url).metadata,
+                                    'size': int(bucket.get_blob(playlist.firebase_url).size/1024/1024)
+                                }
+                            ]
+                        })
+                        i+=1
             else:
-                res.status = falcon.HTTP_500
-        else:
-            res.status = falcon.HTTP_400
+                data.append({
+                    'name': playlist.name,
+                    'owner': playlist.user_email,
+                    'firebase_data': [{
+                            'url': playlist.firebase_url,
+                            'metadata': bucket.get_blob(playlist.firebase_url).metadata,
+                            'size': int(bucket.get_blob(playlist.firebase_url).size/1024/1024)
+                        }
+                    ]
+                })
+            
+            res.status = falcon.HTTP_200
+            res.body = json.dumps({
+                'data': data
+            })
+        # else:
+        #     res.status = falcon.HTTP_500
 
     def on_post(self, req, res):
         if req.stream:
