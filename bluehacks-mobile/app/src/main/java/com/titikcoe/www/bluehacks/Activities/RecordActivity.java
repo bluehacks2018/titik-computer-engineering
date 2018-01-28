@@ -380,7 +380,7 @@ public class RecordActivity extends AppCompatActivity {
     private void Ufload(String fb_url) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "/playlist";
+        String url = "https://b22c536.ngrok.io/playlist";
         String name = "playlist_name_here";
         String firebase_url = "firebase_url_here";
         String user_email = "owner_email_here";
