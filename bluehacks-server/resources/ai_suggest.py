@@ -40,9 +40,7 @@ class SuggestResource(object):
         simCandidates.sort_values(inplace = True, ascending = False)
         filteredSims = simCandidates.drop(myRatings.index)
 
-        print(filteredSims.head().index.values)
         suggestions = filteredSims.head().index.values.tolist()
-        suggestionsOthers = simCandidates
         # res.status = falcon.HTTP_200
         # res.body = json.dumps({ 'suggestions': filteredSims.head().index.values.tolist() })
 
@@ -63,7 +61,6 @@ class SuggestResource(object):
                             'metadata': bucket.get_blob(playlist.firebase_url).metadata,
                             'size': int(bucket.get_blob(playlist.firebase_url).size/1024/1024)
                         })
-                        break
                     elif data.index(entry) == len(data)-1 and entry.get('name') != playlist.name:
                         data.append({
                             'name': playlist.name,
