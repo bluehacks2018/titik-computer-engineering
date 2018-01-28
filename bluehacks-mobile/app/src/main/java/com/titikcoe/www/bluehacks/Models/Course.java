@@ -61,4 +61,12 @@ public class Course {
     public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public void setUrl(String mUrl) {
+        this.mUrl = mUrl;
+    }
 }

@@ -50,7 +50,7 @@ public class PlaylistActivity extends AppCompatActivity {
             mLayoutManager = new LinearLayoutManager(this);
             mRecyclerView.setLayoutManager(mLayoutManager);
 
-            mAdapter = new AudioContentAdapter(mCourses);
+            mAdapter = new AudioContentAdapter(this, mCourses);
             mRecyclerView.setAdapter(mAdapter);
 
             mHeaderImage = (ImageView) findViewById(R.id.header_image);

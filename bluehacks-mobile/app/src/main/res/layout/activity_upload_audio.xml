@@ -10,10 +10,11 @@
         android:id="@+id/txv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Title"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="46dp" />
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/edt_title"
@@ -22,7 +23,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/txv_title"
         tools:layout_editor_absoluteX="16dp" />
 
@@ -32,17 +33,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Description"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/edt_title"
         tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/edt_desc"
-        android:layout_width="356dp"
-        android:layout_height="107dp"
+        android:layout_width="345dp"
+        android:layout_height="75dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textMultiLine"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/txv_desc"
         tools:layout_editor_absoluteX="16dp" />
 
@@ -52,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Field of Interest"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/edt_desc"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/edt_playlist"
         tools:layout_editor_absoluteX="16dp" />
 
     <Spinner
@@ -72,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Tags"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/spn_field"
         tools:layout_editor_absoluteX="16dp" />
 
@@ -93,5 +95,27 @@
         android:layout_marginTop="35dp"
         android:text="Proceed"
         app:layout_constraintTop_toBottomOf="@+id/edt_tags"
-        tools:layout_editor_absoluteX="147dp" />/>
+        tools:layout_editor_absoluteX="147dp" />
+
+    <EditText
+        android:id="@+id/edt_playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txv_playlist" />
+
+    <TextView
+        android:id="@+id/txv_playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Playlist"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/edt_desc"
+        tools:layout_editor_absoluteX="16dp" />/>
 </android.support.constraint.ConstraintLayout>

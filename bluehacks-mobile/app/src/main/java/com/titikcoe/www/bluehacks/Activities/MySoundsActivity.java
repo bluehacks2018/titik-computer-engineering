@@ -24,6 +24,7 @@ public class MySoundsActivity extends AppCompatActivity {
     private TextView mArtistTextView;
     private ImageView mMediaControlsImage;
     private MediaSeekBar mSeekBarAudio;
+    final Intent receivedQueries = getIntent();
 
     private MediaBrowserAdapter mMediaBrowserAdapter;
 
@@ -36,26 +37,26 @@ public class MySoundsActivity extends AppCompatActivity {
         initializeUI();
         mMediaBrowserAdapter = new MediaBrowserAdapter(MySoundsActivity.this);
         mMediaBrowserAdapter.addListener(new MediaBrowserListener());
-        Button rec = (Button) findViewById(R.id.btn_record);
-        rec.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent recordIntent = new Intent(MySoundsActivity.this,
-                        RecordActivity.class);
-                startActivity(recordIntent);
-                return;
-            }
-        });
-        Button stream = (Button) findViewById(R.id.btn_stream);
-        stream.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent streamIntent = new Intent(MySoundsActivity.this,
-                        StreamerActivity.class);
-                startActivity(streamIntent);
-                return;
-            }
-        });
+//        Button rec = (Button) findViewById(R.id.btn_record);
+//        rec.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent recordIntent = new Intent(MySoundsActivity.this,
+//                        RecordActivity.class);
+//                startActivity(recordIntent);
+//                return;
+//            }
+//        });
+//        Button stream = (Button) findViewById(R.id.btn_stream);
+//        stream.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent streamIntent = new Intent(MySoundsActivity.this,
+//                        StreamerActivity.class);
+//                startActivity(streamIntent);
+//                return;
+//            }
+//        });
     }
 
     private void initializeUI() {
@@ -64,6 +65,10 @@ public class MySoundsActivity extends AppCompatActivity {
         mAlbumArt = (ImageView) findViewById(R.id.album_art);
         mMediaControlsImage = (ImageView) findViewById(R.id.media_controls);
         mSeekBarAudio = (MediaSeekBar) findViewById(R.id.seekbar_audio);
+
+
+//        String title = receivedQueries.getStringExtra("title");
+//        mTitleTextView.setText(title);
 
         final Button buttonPrevious = (Button) findViewById(R.id.button_previous);
         buttonPrevious.setOnClickListener(new View.OnClickListener() {

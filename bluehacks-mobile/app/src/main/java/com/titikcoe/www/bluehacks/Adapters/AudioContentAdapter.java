@@ -1,16 +1,37 @@
 package com.titikcoe.www.bluehacks.Adapters;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.titikcoe.www.bluehacks.Activities.MainActivity;
+import com.titikcoe.www.bluehacks.Activities.MySoundsActivity;
+import com.titikcoe.www.bluehacks.Activities.RecordActivity;
+import com.titikcoe.www.bluehacks.Activities.StreamerActivity;
+import com.titikcoe.www.bluehacks.Activities.UploadAudio;
 import com.titikcoe.www.bluehacks.Models.Course;
 import com.titikcoe.www.bluehacks.R;
+import com.titikcoe.www.bluehacks.service.contentcatalogs.MusicLibrary;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Adrian Mark Perea on 27/01/2018.
@@ -18,8 +39,15 @@ import java.util.List;
 
 public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapter.ViewHolder> {
     private List<Course> mDataSet;
+    private StorageReference mStorageRef;
+    private FirebaseAuth mAuth;
+    private Context mCtx;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+
+
         public ImageView mPosterImageView;
         public TextView mTitleTextView;
         public TextView mUploaderTextView;
@@ -50,8 +78,25 @@ public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapte
         }
     }
 
-    public AudioContentAdapter(List<Course> dataSet) {
+    public AudioContentAdapter(Context ctx, List<Course> dataSet) {
         mDataSet = dataSet;
+        mAuth = FirebaseAuth.getInstance();
+        mCtx = ctx;
+        signInAnonymously();
+
+    }
+    private void signInAnonymously() {
+        mAuth.signInAnonymously().addOnSuccessListener((Activity) mCtx, new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Toast.makeText(mCtx, "WAZZAAAAAP", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener((Activity) mCtx, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     @Override
@@ -64,11 +109,43 @@ public class AudioContentAdapter extends RecyclerView.Adapter<AudioContentAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add music playing shit here
+                Log.d("whatever", mDataSet.get(position).getUrl());
+                mStorageRef = FirebaseStorage.getInstance().getReference();
+                final StorageReference ref = mStorageRef.child(mDataSet.get(position).getUrl());
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Intent uploadIntent = new Intent(mCtx, StreamerActivity.class);
+                        String title= "placeholder";
+                        Log.d("Hey",title);
+                        uploadIntent.putExtra("title",title);
+                        uploadIntent.putExtra("url",uri);
+                        MusicLibrary.createMediaMetadataCompat(
+                                title.replace(" ","_"),
+                                title,
+                                mAuth.getCurrentUser().getDisplayName(),
+                                "",
+                                "",
+                                160,
+                                TimeUnit.SECONDS,
+                                uri.toString(),
+                                R.drawable.album_youtube_audio_library_rock_2,
+                                "album_youtube_audio_library_rock_2");
+                        mCtx.startActivity(uploadIntent);
+
+
+
+
+
+                        Log.d("URL", uri.toString());
+                    }
+                });
+
+
             }
         });
         holder.mTitleTextView.setText(mDataSet.get(position).getTitle());

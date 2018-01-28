@@ -14,6 +14,7 @@ public class UploadAudio extends AppCompatActivity {
     private EditText edtTitle;
     private EditText edtDesc;
     private EditText edtTags;
+    private EditText edtPlaylist;
     private Spinner mSpnGenre;
     private Button btnProceed;
 
@@ -24,6 +25,7 @@ public class UploadAudio extends AppCompatActivity {
 
         edtTitle = (EditText) findViewById(R.id.edt_title);
         edtDesc = (EditText) findViewById(R.id.edt_desc);
+        edtPlaylist = (EditText) findViewById(R.id.edt_playlist);
         mSpnGenre = (Spinner) findViewById(R.id.spn_field);
         edtTags = (EditText) findViewById(R.id.edt_desc);
 
@@ -35,6 +37,7 @@ public class UploadAudio extends AppCompatActivity {
                 Intent uploadIntent = new Intent(UploadAudio.this, RecordActivity.class);
                 uploadIntent.putExtra("title",edtTitle.getText().toString());
                 uploadIntent.putExtra("desc",edtDesc.getText().toString());
+                uploadIntent.putExtra("playlist",edtPlaylist.getText().toString());
                 uploadIntent.putExtra("genre",mSpnGenre.getSelectedItem().toString());
                 uploadIntent.putExtra("tags" ,edtTags.getText().toString());
                 startActivity(uploadIntent);

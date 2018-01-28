@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -17,15 +18,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.titikcoe.www.bluehacks.R;
+import com.titikcoe.www.bluehacks.TutoApplication;
 import com.titikcoe.www.bluehacks.service.contentcatalogs.MusicLibrary;
 
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 public class RecordActivity extends AppCompatActivity {
+    private StorageReference mStorageRef;
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -53,6 +65,7 @@ public class RecordActivity extends AppCompatActivity {
     String desc = null;
     String genre = null;
     String tags = null;
+    String playlist = null;
 
 
 //    private EditText mEditTitle = null;
@@ -114,6 +127,7 @@ public class RecordActivity extends AppCompatActivity {
 
         mFileName = getExternalFilesDir("").getAbsolutePath();
         mFileName +="/"+ title.replace(" ", "_").concat(".3gp");
+        Log.d("Save Dir", mFileName);
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
@@ -184,6 +198,8 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
 
         // Record to the external cache directory for visibility
         mFileName = getExternalFilesDir("").getAbsolutePath();
@@ -206,6 +222,7 @@ public class RecordActivity extends AppCompatActivity {
         desc = receivedQueries.getStringExtra("desc");
         genre = receivedQueries.getStringExtra("genre");
         tags = receivedQueries.getStringExtra("tags");
+        playlist = receivedQueries.getStringExtra("playlist");
 
         txvTitle.setText(title);
 
@@ -240,6 +257,7 @@ public class RecordActivity extends AppCompatActivity {
                     Intent doneIntent = new Intent(RecordActivity.this, MainActivity.class);
                     String mediaId = title.replace(" ", "_");
                     String fileName = mediaId.concat(".3gp");
+                    Log.d("filename", fileName);
                     mLib.createMediaMetadataCompat(
                             mediaId,
                             title,
@@ -251,11 +269,50 @@ public class RecordActivity extends AppCompatActivity {
                             fileName    ,
                             0,
                             "album_youtube_audio_library_rock_2");
+                    TutoApplication app = (TutoApplication) getApplication();
+
+                    Uri file = Uri.fromFile(new File(getExternalFilesDir("").getAbsolutePath().concat("/"+fileName).concat(".3gp")));
+                    String userName = app.getUserEmail();
+                    Log.d("Username", userName);
+
+                    StorageReference ref = mStorageRef.child(userName);
+
+                    try {
+
+                        File savedFile = new File(
+                                getExternalFilesDir("").getAbsolutePath().concat("/"+fileName));
+                        Log.d("Read Dir", getExternalFilesDir("").getAbsolutePath().concat("/"+fileName));
+                        if (savedFile.exists()) {
+                            Log.d("SAVEDFILE", "im aliiiiive");
+                        } else {
+                            Log.d("SAVEDFILE", "wenkwenkwenk");
+                        }
+
+                        InputStream stream = new FileInputStream(new File(
+                                getExternalFilesDir("").getAbsolutePath().concat("/"+fileName)));
+                        UploadTask uploadTask = ref.putStream(stream);
+                        Log.d("Noted", "wow gumana");
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                               
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                            }
+                        });
+                    } catch (IOException e) {
+                        // TODO: Add proper error handling
+                        e.printStackTrace();
+                    }
                     startActivity(doneIntent);
-                    finish();
-                    return;
                 }
-                if(!mRecording)
+                else if(!mRecording)
                 {
                     mRecording=true;
                     mRecordButton.setText("Stop");
@@ -271,59 +328,7 @@ public class RecordActivity extends AppCompatActivity {
                 return;
             }
         });
-//        mPauseButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                if(!mStopped)
-////                {
-////                    if(!mPaused)
-////                    {
-////                        mRecorder.pause();
-////                        mPauseButton.setText("Continue");
-////                        mPaused=true;
-////                        timeSwapBuff += timeInMilliseconds;
-////                        customHandler.removeCallbacks(updateTimerThread);
-////                    }
-////                    else
-////                    {
-////                        mRecorder.resume();
-////                        mPauseButton.setText("Pause");
-////                        mPaused=false;
-////                        startHTime = SystemClock.uptimeMillis();
-////                        customHandler.postDelayed(updateTimerThread, 0);
-////
-////                    }
-////                }
-////                else{
-//
-//
-//
-//
-//
-//            }
-//        });
-//        mSaveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String mediaId = mEditTitle.getText().toString().replace(" ", "_");
-//                String title = mEditTitle.getText().toString();
-//                String desc = mEditDesc.getText().toString();
-//                String genre = mEditGenre.getText().toString();
-//                String fileName = mEditTitle.getText().toString().replace(" ", "_").concat(".3gp");
-//                mLib.createMediaMetadataCompat(
-//                        mediaId,
-//                        title,
-//                        "The 126ers",
-//                        desc,
-//                        genre,
-//                        timeSwapBuff,
-//                        TimeUnit.MILLISECONDS,
-//                        fileName    ,
-//                        R.drawable.album_youtube_audio_library_rock_2,
-//                        "album_youtube_audio_library_rock_2");
-//                return;
-//            }
-//        });
+
     }
 
     @Override
