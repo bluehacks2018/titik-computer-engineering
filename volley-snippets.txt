@@ -1,6 +1,7 @@
 // ADD COURSE ITEM
 RequestQueue queue = Volley.newRequestQueue(this);
 String url = "/course_item";
+
 String firebase_url ="";
 String language = "ENGLISH";
 String owner = "email_here";
@@ -60,7 +61,7 @@ try {
     e.printStackTrace();
 }
 
-// ADD PLAYLIST ITEM or CREATE PLAYLIST
+// ADD PLAYLIST ITEM
 RequestQueue queue = Volley.newRequestQueue(this);
 String url = "/playlist";
 String name = "playlist_name_here";
@@ -96,12 +97,10 @@ try {
 RequestQueue queue = Volley.newRequestQueue(this);
 String url = "/course_item/get";
 String firebase_url = "";
-String language = "ENGLISH";
 
 try {
     JSONObject jsonRequest = new JSONObject();
     jsonRequest.put("firebase_url", firebase_url);
-    jsonRequest.put("language", language);
     JsonObjectRequest jsObjRequest = new JsonObjectRequest
             (Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
                 @Override

@@ -1,6 +1,7 @@
 package com.titikcoe.www.bluehacks.Activities;
 
 import android.content.Intent;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +44,10 @@ public class PlaylistActivity extends AppCompatActivity {
         if (position != -1) {
             TutoApplication app = (TutoApplication) getApplication();
             Playlist currentPlaylist = app.getPlaylists().get(position);
+
+            CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+            ctl.setTitle(currentPlaylist.getPlaylistName());
+
             mCourses = currentPlaylist.getCourses();
 
             mRecyclerView = (RecyclerView) findViewById(R.id.content_recycler_view);

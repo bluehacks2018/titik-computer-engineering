@@ -162,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void getPlaylists() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://b225c536.ngrok.io/playlist";
+        String url = "https://b225c536.ngrok.io/suggest";
+        url += "?user_email=" + ((TutoApplication) getApplication()).getUserEmail();
 
 
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
